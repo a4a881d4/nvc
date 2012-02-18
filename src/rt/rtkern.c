@@ -174,6 +174,32 @@ static inline uint64_t heap_key(uint64_t when, event_kind_t kind)
 ////////////////////////////////////////////////////////////////////////////////
 // Runtime support functions
 
+// Ensure we get consistent symbol names on Windows
+#ifdef __CYGWIN__
+void _sched_process(int64_t)
+     asm ("_sched_process");
+void _sched_waveform_vec(void*, int32_t, void*, int32_t, int32_t, int64_t)
+     asm ("_sched_process");
+void _sched_waveform(void*, int32_t, int64_t, int64_t)
+     asm ("_sched_waveform");
+void _sched_event(void*, int32_t)
+     asm ("_sched_event");
+void _assert_fail(const uint8_t*, int32_t, int8_t, int32_t)
+     asm ("_assert_fail");
+uint64_t _std_standard_now(void)
+     asm ("_std_standard_now");
+char *_tmp_alloc(int32_t, int32_t)
+     asm ("_tmp_alloc");
+void _array_copy(void*, const void*, int32_t, int32_t, int32_t, int8_t)
+     asm ("_array_copy");
+int8_t _array_eq(const void*, const void *, int32_t, int32_t, int8_t)
+     asm ("_array_eq");
+int8_t *_image(int64_t)
+     asm ("_image");
+void _debug_out(int32_t)
+     asm ("_debug_out");
+#endif  // __CYGWIN__
+
 void _sched_process(int64_t delay)
 {
    TRACE("_sched_process delay=%s", fmt_time(delay));
